@@ -3,7 +3,9 @@ console.log(123)
 </script>
 
 <template>
-  <div>我是APP</div>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <style scoped></style>
