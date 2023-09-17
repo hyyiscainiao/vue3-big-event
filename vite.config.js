@@ -1,14 +1,11 @@
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-// https://vitejs.dev/config/
-// vite 的配置 import.meta.env.BASE_URL 是路由的基准地址，默认是 ’/‘
-// vite.config.ts  添加配置  base: my-path，路由这就会加上 my-path 前缀了
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
@@ -19,10 +16,22 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()]
     })
   ],
-  // base: '/mypath',
+  base: '/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  server: {
+    //主要是加上这段代码
+    host: '127.0.0.1',
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:5174', //实际请求地址
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
     }
   }
 })

@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores'
 // createRouter 创建路由实例，===> new VueRouter()
 // 1. history模式: createWebHistory()   http://xxx/user
 // 2. hash模式: createWebHashHistory()  http://xxx/#/user
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/login', component: () => import('@/views/login/LoginPage.vue') },
+    { path: '/login', component: () => import('@/views/login/LoginPage.vue') }, // 登录页
     {
       path: '/',
       component: () => import('@/views/layout/LayoutContainer.vue'),
@@ -28,12 +29,18 @@ const router = createRouter({
           component: () => import('@/views/user/UserAvatar.vue')
         },
         {
-          path: ' /user/password',
+          path: '/user/password',
           component: () => import('@/views/user/UserPassword.vue')
         }
       ]
     }
   ]
+})
+
+router.beforeEach((to) => {
+  // 如果没有token, 且访问的是非登录页，拦截到登录，其他情况正常放行
+  const useStore = useUserStore()
+  if (!useStore.token && to.path !== '/login') return '/login'
 })
 
 export default router
