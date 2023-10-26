@@ -46,6 +46,7 @@ const router = createRouter({
 router.beforeEach((to) => {
   const userStore = useUserStore()
   // 如果没有token, 且访问的是非登录页，拦截到登录，其他情况正常放行
+  // 只有登录页，可以未授权的时候访问，其他所有页面，都需要先登录再访问
   if (!userStore.token && to.path != '/login') return '/login'
 })
 

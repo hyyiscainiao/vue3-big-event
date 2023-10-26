@@ -87,7 +87,7 @@ el-container
     <el-container>
       <el-header>
         <div>
-          黑马程序员：<strong>{{
+          用户名：<strong>{{
             userStore.user.nickname || userStore.user.username
           }}</strong>
         </div>
@@ -118,7 +118,7 @@ el-container
       <el-main>
         <router-view></router-view>
       </el-main>
-      <el-footer>大事件 ©2023 Created by 黑马程序员</el-footer>
+      <el-footer>博客站 ©2023 Created by hyy</el-footer>
     </el-container>
   </el-container>
 </template>
@@ -130,7 +130,7 @@ el-container
     background-color: #232323;
     &__logo {
       height: 120px;
-      background: url('@/assets/logo.png') no-repeat center / 120px auto;
+      background: url('@/assets/hyy.png') no-repeat center / 100px auto;
     }
     .el-menu {
       border-right: none;
